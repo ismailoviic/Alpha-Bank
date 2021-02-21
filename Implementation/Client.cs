@@ -13,13 +13,13 @@ namespace Alpha_Bank.Implementation
             : base(person.FirstName, person.LastName, person.CIN)
         {
             Solde = solde;
-            Credit = new Credit(0, 0, 0);
+            Credit = new Credit(0, 12, 0);
         }
         public Client(string fisrtName, string lastName, string cin, decimal solde)
             : base(fisrtName, lastName, cin)
         {
             Solde = solde;
-            Credit = new Credit(0, 0, 0);
+            Credit = new Credit(0, 12, 0);
         }
     }
 }

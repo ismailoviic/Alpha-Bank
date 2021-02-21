@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Alpha_Bank.Implementation
@@ -12,9 +13,12 @@ namespace Alpha_Bank.Implementation
 
         public Person(string fisrtName, string lastName, string cin)
         {
-            FirstName = fisrtName;
-            LastName = lastName;
-            CIN = cin;
+            if (cin.Any(c => char.IsDigit(c)))
+            {
+                CIN = cin;
+                FirstName = fisrtName;
+                LastName = lastName;
+            }
         }
 
         public bool ComparePersonTo(Person person)
