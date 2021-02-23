@@ -11,16 +11,6 @@ namespace Alpha_Bank.Implementation
         public string LastName { get; set; }
         public string CIN { get; set; }
 
-        public Person(string fisrtName, string lastName, string cin)
-        {
-            if (cin.Any(c => char.IsDigit(c)))
-            {
-                CIN = cin;
-                FirstName = fisrtName;
-                LastName = lastName;
-            }
-        }
-
         public bool ComparePersonTo(Person person)
         {
             return FirstName == person.FirstName &&

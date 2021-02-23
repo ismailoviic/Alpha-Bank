@@ -10,17 +10,11 @@ namespace Alpha_Bank.Implementation
         public int DurationInMonth { get; set; }
         public decimal InterestRate { get; set; }
         public decimal MonthlyInstallment { get; set; }
+    }
 
-        public Credit(decimal amount, int duration, decimal interestRate)
-        {
-            if (duration > 0 && amount >= 0 && interestRate >= 0)
-            {
-                Amount = amount;
-                DurationInMonth = duration;
-                InterestRate = interestRate;
-                MonthlyInstallment = (amount * (1 + (interestRate / 100))) / duration;
-            }
-            else { Amount = -1; }
-        }
+    public class Offer : Credit
+    {
+        public string Name { get; set; }
+        public bool IsActive { get; set; }
     }
 }

@@ -30,7 +30,8 @@ namespace Alpha_Bank
             var cin = "AE202368";
             var solde = 500;
             var sut1 = new Person(firstName, lastName, cin);
-            var sut2 = new Client(firstName, lastName, cin, solde);
+            var sut2 = new Client {(firstName, lastName, cin, solde)};
+
             var sut3 = new Client(sut1, solde);
 
             Assert.Equal(firstName, sut2.FirstName);
