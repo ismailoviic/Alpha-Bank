@@ -1,9 +1,8 @@
-﻿using Alpha_Bank.Implementation;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Alpha_Bank.Testes
+namespace AlphaBankImplementation
 {
     public class FunctionsTests
     {

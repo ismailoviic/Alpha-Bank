@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Alpha_Bank.Implementation
+namespace AlphaBankImplementation
 {
     public class Client : Person
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Alpha_Bank.Implementation
+namespace AlphaBankImplementation
 {
     public class Agency : IAgency
     {

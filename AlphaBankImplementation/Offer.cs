@@ -1,4 +1,4 @@
-﻿namespace Alpha_Bank.Implementation
+﻿namespace AlphaBankImplementation
 {
     public class Offer : Credit
     {
