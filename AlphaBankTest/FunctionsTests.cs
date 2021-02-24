@@ -6,8 +6,7 @@ namespace AlphaBankImplementation
 {
     public class FunctionsTests
     {
-        public Agency NewAgency;
-        public List<Client> Clients;
+        public AgencyServicesServices NewAgency;
         public FunctionsTests()
         {
             var employees = new List<Employee>() {
@@ -60,7 +59,7 @@ namespace AlphaBankImplementation
                     Solde = 6254
                 }
             };
-            NewAgency = new Agency(employees, 99999999);
+            NewAgency = new AgencyServicesServices { Employees = employees, Caisse = 99999999 };
             var clients = new List<Client>() {
                 new Client{
                     FirstName="Said",
@@ -243,7 +242,7 @@ namespace AlphaBankImplementation
             var client2 = BankAgency.Clients.Find(cl => cl.CIN == "AX96944");
             var client3 = BankAgency.Clients.Find(cl => cl.CIN == "AX97725");
             var amount = 7000;
-            var solde1 = client1.Solde-amount-6;
+            var solde1 = client1.Solde - amount - 6;
             var solde2 = client2.Solde - 30;
             var sut1 = BankAgency.Transaction(Commercial, client1, client2, amount, TransactionType.National);
             var sut2 = BankAgency.Transaction(Commercial, client2, client3, amount, TransactionType.International);

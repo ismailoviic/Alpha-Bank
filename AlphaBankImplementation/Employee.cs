@@ -8,6 +8,5 @@ namespace AlphaBankImplementation
     {
         public Role Role;
         public decimal Solde;
-        public Employee() { }
     }
 }

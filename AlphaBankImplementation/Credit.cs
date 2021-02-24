@@ -10,7 +10,5 @@ namespace AlphaBankImplementation
         public int DurationInMonth { get; set; }
         public decimal InterestRate { get; set; }
         public decimal MonthlyInstallment { get; set; }
-
-        public Credit() { }
     }
 }

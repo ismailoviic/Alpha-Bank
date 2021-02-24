@@ -4,10 +4,10 @@ using System.Text;
 
 namespace AlphaBankImplementation
 {
-    public interface IAgency
+    public interface IAgencyServices
     {
-        bool RecruitSalesAgents(Employee employee, List<Employee> Salers);
-        bool RespondToComplaints(Employee employee, Client client, string Respond);
+        bool RecruitSalesAgents(Employee person, List<Employee> newSaler);
+        bool RespondToComplaints(Employee employee, Client client, string respond);
         bool CreditAllocation(Employee employee, Client client, Offer offer);
         bool PurchaseEquipment(Employee employee, decimal amount);
         bool SalaryTransfer(Employee employee1, Employee employee, decimal salary);

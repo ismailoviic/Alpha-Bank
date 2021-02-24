@@ -11,8 +11,6 @@ namespace AlphaBankImplementation
         public string LastName { get; set; }
         public string CIN { get; set; }
 
-        public Person() { }
-
         public bool ComparePersonTo(Person person)
         {
             return FirstName == person.FirstName &&

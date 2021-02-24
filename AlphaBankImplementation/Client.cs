@@ -9,6 +9,5 @@ namespace AlphaBankImplementation
         public decimal Solde;
         public string Reclamation { get; set; }
         public Credit Credit;
-        public Client() { }
     }
 }
