@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Alpha_Bank.Implementation
 {
     public class Agency : IAgency
     {
-        public List<Employee> Employees = new List<Employee>();
+        public List<Employee> Employees { get; set; }
 
-        public List<Client> Clients = new List<Client>();
-        public List<Credit> CreditOffers = new List<Credit>();
+        public List<Client> Clients { get; set; }
+        public List<Offer> CreditOffers { get; set; }
         public decimal Caisse { get; set; }
-
-        const decimal AccountCreationFees = 30;
-        const decimal NationalTransactionFees = 6;
-        const decimal InternationalTransactionFees = 10;
 
         public Agency(List<Employee> employees, decimal caisse)
         {
@@ -28,97 +25,104 @@ namespace Alpha_Bank.Implementation
             return false;
         }
 
-        public bool RespondToComplaints(Employee person, Client client, string Respond)
+        public bool RespondToComplaints(Employee employee, Client client, string Respond)
         {
-            if (person.Role == Role.Chef) { client.Reclamation = Respond; return true; }
+            if (employee.Role == Role.Chef) { client.Reclamation = Respond; return true; }
             return false;
         }
 
-        public bool CreditAllocation(Employee person, Client client, decimal amount, int durationInMonth = 12, decimal monthlyInstallment = 0)
+        public bool CreditAllocation(Employee employee, Client client, Offer offer)
         {
-            var clientHasNoCredit = client.Credit.Amount == 0;
-            var compatibleOfferExist = CreditOffers.Exists(x =>
-                x.Amount >= amount && (x.DurationInMonth >= durationInMonth || x.MonthlyInstallment <= monthlyInstallment));
-            var amountExistInCaisse = Caisse > amount;
-            if (person.Role == Role.Chef && clientHasNoCredit && compatibleOfferExist && amountExistInCaisse)
+            var clientHasNoCredit = client.Credit == null;
+            var compatibleOffer = CreditOffers.First(x => x.Name.Equals(offer.Name));
+
+            var amountExistInCaisse = Caisse > offer.Amount;
+            if (!amountExistInCaisse) return false;
+            if (compatibleOffer == null) return false;
+            if (employee.Role == Role.Chef && clientHasNoCredit)
             {
-                var compatibleOffer = CreditOffers.Find(x =>
-                    x.Amount >= amount && x.DurationInMonth >= durationInMonth && x.MonthlyInstallment <= monthlyInstallment);
-
-                client.Credit.Amount = compatibleOffer.Amount;
-                client.Credit.DurationInMonth = compatibleOffer.DurationInMonth;
-                client.Credit.InterestRate = compatibleOffer.InterestRate;
-                client.Credit.MonthlyInstallment = compatibleOffer.MonthlyInstallment;
-
-                Caisse -= amount;
+                client.Credit = new Credit
+                {
+                    Amount = compatibleOffer.Amount,
+                    DurationInMonth = compatibleOffer.DurationInMonth,
+                    InterestRate = compatibleOffer.InterestRate,
+                    MonthlyInstallment = compatibleOffer.MonthlyInstallment
+                };
+                Caisse -= offer.Amount;
                 return true;
             }
             return false;
         }
 
-        public bool PurchaseEquipment(Employee person, decimal amount)
+        public bool PurchaseEquipment(Employee employee, decimal amount)
         {
             var amountExistInCaisse = Caisse >= amount;
-            var theOneInCharge = person.Role == Role.Chef || person.Role == Role.AdministrativeResponsible;
+            var theOneInCharge = employee.Role == Role.AdministrativeResponsible;
             if (amountExistInCaisse && theOneInCharge) { Caisse -= amount; return true; }
             return false;
         }
 
-        public bool SalaryTransfer(Employee person, Employee employee, decimal salary)
+        public bool SalaryTransfer(Employee employee1, Employee employee, decimal salary)
         {
             var amountExistInCaisse = Caisse >= salary;
-            var theOneInCharge = person.Role == Role.Chef || person.Role == Role.AdministrativeResponsible;
+            var theOneInCharge = employee1.Role == Role.AdministrativeResponsible;
             if (amountExistInCaisse && theOneInCharge) { Caisse -= salary; employee.Solde += salary; return true; }
             return false;
         }
 
-        public bool WithdrawalAmount(Employee person, Client client, decimal amount)
+        public bool WithdrawalAmount(Employee employee, Client client, decimal amount)
         {
             var amountExistSolde = Caisse >= amount;
-            var theOneInCharge = person.Role == Role.Chef || person.Role == Role.AdministrativeResponsible;
+            var theOneInCharge = employee.Role == Role.AdministrativeResponsible;
             if (amountExistSolde && theOneInCharge) { client.Solde -= amount; return true; }
             return false;
         }
 
-        public bool NewCreditOffer(Employee person, decimal amount, int duration, decimal interestRate)
+        public bool NewCreditOffer(Employee employee, Offer offer)
         {
-            var creditOfferExist = CreditOffers.Exists(cr => cr.Amount == amount && cr.DurationInMonth == duration && cr.InterestRate == interestRate);
-            var theOneInCharge = person.Role == Role.Chef || person.Role == Role.ProductsResponsible;
-            if (!creditOfferExist && theOneInCharge) { CreditOffers.Add(new Credit(amount, duration, interestRate)); return true; }
-            return false;
-        }
-
-        public bool CreateAccount(Employee person, Person newClient, decimal solde)
-        {
-            var clientExist = Clients.Exists(cl => cl.CIN == newClient.CIN);
-            var soldeSufficient = solde >= 30;
-            var theOneInCharge = person.Role == Role.Chef || person.Role == Role.ProductsResponsible;
-            if (!clientExist && theOneInCharge && soldeSufficient) { Clients.Add(new Client(newClient, solde - 30)); Caisse += 30; return true; }
-            return false;
-        }
-
-        public bool Transfers(Employee person, Client client, decimal amount)
-        {
-            var clientExist = Clients.Exists(cl => cl.CIN == client.CIN);
-            var theOneInCharge = person.Role == Role.Chef || person.Role == Role.ProductsResponsible || person.Role == Role.AdministrativeResponsible || person.Role == Role.CommercialAgent;
-            if (clientExist && theOneInCharge) { client.Solde += amount; return true; }
-            return false;
-        }
-
-        public bool Transaction(Employee person, Client sender, Client receiver, decimal amount, TransactionType transaction)
-        {
-            var transactionFees = transaction == TransactionType.National ? 6 : 30;
-            var senderAndReceiverExist = Clients.Exists(cl => cl.CIN == sender.CIN) && Clients.Exists(cl => cl.CIN == receiver.CIN);
-            var senderHasAmount = sender.Solde >= amount + transactionFees;
-            var theOneInCharge = person.Role == Role.Chef || person.Role == Role.ProductsResponsible || person.Role == Role.AdministrativeResponsible || person.Role == Role.CommercialAgent;
-            if (senderAndReceiverExist && senderHasAmount && theOneInCharge)
+            var creditOfferExist = CreditOffers.Exists(cr => cr.Name.Equals(offer.Name));
+            if (creditOfferExist) return false;
+            if (employee.Role == Role.ProductsResponsible)
             {
-                sender.Solde -= amount + transactionFees;
-                receiver.Solde += amount;
-                Caisse += transactionFees;
+                CreditOffers.Add(offer);
                 return true;
             }
             return false;
+        }
+
+        public bool CreateClientAccount(Employee employee, Client newClient)
+        {
+            var clientExist = Clients.Exists(cl => cl.CIN == newClient.CIN);
+            var soldeSufficient = newClient.Solde >= 30;
+            if (employee.Role != Role.ProductsResponsible) return false;
+            if (clientExist) return false;
+            if (soldeSufficient)
+            {
+                newClient.Solde -= 30;
+                Clients.Add(newClient);
+                Caisse += 30;
+                return true;
+            }
+            return false;
+        }
+        public bool Transfers(Employee employee, Client client, decimal amount)
+        {
+            var clientExist = Clients.Exists(cl => cl.CIN == client.CIN);
+            if (!clientExist || employee.Role != Role.CommercialAgent) return false;
+            client.Solde += amount; return true;
+        }
+
+        public bool Transaction(Employee employee, Client sender, Client receiver, decimal amount, TransactionType transaction)
+        {
+            var transactionFees = transaction == TransactionType.National ? 6 : 30;
+            var senderAndReceiverExist = Clients.Select(cl => cl.CIN).Intersect(new[] { sender.CIN, receiver.CIN }).Count() == 2;
+            var senderHasAmount = sender.Solde >= amount + transactionFees;
+            var theOneInCharge = employee.Role == Role.CommercialAgent;
+            if (!senderAndReceiverExist || !senderHasAmount || !theOneInCharge) return false;
+            sender.Solde -= amount + transactionFees;
+            receiver.Solde += amount;
+            Caisse += transactionFees;
+            return true;
         }
     }
 }

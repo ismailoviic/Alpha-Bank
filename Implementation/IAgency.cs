@@ -6,15 +6,15 @@ namespace Alpha_Bank.Implementation
 {
     public interface IAgency
     {
-        bool RecruitSalesAgents(Employee person, List<Employee> Salers);
-        bool RespondToComplaints(Employee person, Client client, string Respond);
-        bool CreditAllocation(Employee person, Client client, decimal amount, int durationInMonth = 12, decimal monthlyInstallment = 0);
-        bool PurchaseEquipment(Employee person, decimal amount);
-        bool SalaryTransfer(Employee person, Employee employee, decimal salary);
-        bool WithdrawalAmount(Employee person, Client client, decimal amount);
-        bool NewCreditOffer(Employee person, decimal amount, int duration, decimal interestRate);
-        bool CreateAccount(Employee person, Person newClient, decimal solde);
-        bool Transfers(Employee person, Client client, decimal amount);
-        bool Transaction(Employee person, Client sender, Client receiver, decimal amount, TransactionType transaction);
+        bool RecruitSalesAgents(Employee employee, List<Employee> Salers);
+        bool RespondToComplaints(Employee employee, Client client, string Respond);
+        bool CreditAllocation(Employee employee, Client client, Offer offer);
+        bool PurchaseEquipment(Employee employee, decimal amount);
+        bool SalaryTransfer(Employee employee1, Employee employee, decimal salary);
+        bool WithdrawalAmount(Employee employee, Client client, decimal amount);
+        bool NewCreditOffer(Employee employee, Offer offer);
+        bool CreateClientAccount(Employee employee, Client client);
+        bool Transfers(Employee employee, Client client, decimal amount);
+        bool Transaction(Employee employee, Client sender, Client receiver, decimal amount, TransactionType transaction);
     }
 }

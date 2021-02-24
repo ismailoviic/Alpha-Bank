@@ -12,36 +12,109 @@ namespace Alpha_Bank.Testes
         public FunctionsTests()
         {
             var employees = new List<Employee>() {
-                new Employee(new Person("Ismail","Essabbagh","AE202368"),Role.Chef,123456),
-                new Employee(new Person("Aymen","Graoui","AE202888"),Role.AdministrativeResponsible,4851),
-                new Employee(new Person("Yassine","Essebbagh","AE481528"),Role.ProductsResponsible,956),
-                new Employee(new Person("Manal","Drissi","AE152638"),Role.CommercialAgent,1253),
-                new Employee(new Person("Omar","Essabbagh","AE887568"),Role.CommercialAgent,1425),
-                new Employee(new Person("Asmae","Alharaj","AE9865247"),Role.CommercialAgent,6254),
+                 new Employee
+                {
+                    FirstName = "Ismail",
+                    LastName = "Essabbagh",
+                    CIN = "AE202368",
+                    Role = Role.Chef,
+                    Solde = 123456
+                },
+                 new Employee
+                {
+                    FirstName = "Aymen",
+                    LastName = "Graoui",
+                    CIN = "AE202888",
+                    Role = Role.AdministrativeResponsible,
+                    Solde = 4851
+                },
+                 new Employee
+                {
+                    FirstName = "Yassine",
+                    LastName = "Essebbagh",
+                    CIN = "AE481528",
+                    Role = Role.ProductsResponsible,
+                    Solde = 956
+                },
+                 new Employee
+                {
+                    FirstName = "Manal",
+                    LastName = "Drissi",
+                    CIN = "AE152638",
+                    Role = Role.CommercialAgent,
+                    Solde = 1253
+                },
+                 new Employee
+                {
+                    FirstName = "Omar",
+                    LastName = "Essabbagh",
+                    CIN = "AE887568",
+                    Role = Role.CommercialAgent,
+                    Solde = 1425
+                },
+                 new Employee
+                {
+                    FirstName = "Asmae",
+                    LastName = "Alharaj",
+                    CIN = "AE9865247",
+                    Role = Role.CommercialAgent,
+                    Solde = 6254
+                }
             };
             NewAgency = new Agency(employees, 99999999);
             var clients = new List<Client>() {
-                new Client("Said","Mosker","AX96325",150),
-                new Client("Samira","Salamat","AX97725",130),
-                new Client("Rania","Romaisae","AX098765",1850),
-                new Client("Rachid","Mohssin","AX96944",500),
-                new Client("Kamal","Sadiki","AX98875",1750),
-                new Client("Said","Sadiki","AX02525",158000),
+                new Client{
+                    FirstName="Said",
+                    LastName="Mosker",
+                    CIN="AX96325" ,
+                    Solde=150
+                },
+                new Client{
+                    FirstName="Samira",
+                    LastName="Salamat",
+                    CIN="AX97725"
+
+                    ,Solde=130 },
+                new Client
+                {
+                    FirstName = "Rania",
+                    LastName = "Romaisae",
+                    CIN = "AX098765",
+                    Solde = 1850
+                },
+                new Client {
+                    FirstName = "Rachid",
+                    LastName = "Mohssin",
+                    CIN = "AX96944",
+                    Solde = 500 },
+                new Client
+                {
+                    FirstName = "Kamal",
+                    LastName = "Sadiki",
+                    CIN = "AX98875",
+                    Solde = 1750
+                },
+                new Client
+                {
+                    FirstName = "Said",
+                    LastName = "Sadiki",
+                    CIN = "AX02525",
+                    Solde = 158000
+                },
             };
             NewAgency.Clients = clients;
-            var NewCreditOffer = new List<Credit>() {
-                new Credit(10000, 12, 3),
-                new Credit(20000, 12, 3),
-                new Credit(50000, 12, 3),
-                new Credit(100000, 12, 3),
-                new Credit(150000, 12, 3),
-                new Credit(200000, 12, 3),
-                new Credit(10000, 24, 4),
-                new Credit(20000, 24, 4),
-                new Credit(50000, 24, 4),
-                new Credit(100000, 24, 4),
-                new Credit(150000, 24, 4),
-                new Credit(200000, 24, 4)
+            var NewCreditOffer = new List<Offer>() {
+                new Offer{Name="10000123",Amount=10000,DurationInMonth=12,InterestRate=3},
+                new Offer{Name="qwqwe",Amount=50000,DurationInMonth=12,InterestRate=3},
+                new Offer{Name="qeqrqwr",Amount=100000,DurationInMonth=12,InterestRate=3},
+                new Offer{Name="qwdwdq",Amount=150000,DurationInMonth=12,InterestRate=3},
+                new Offer{Name="dqwdqd",Amount=200000,DurationInMonth=12,InterestRate=3},
+                new Offer{Name="qdcdxqd",Amount=10000,DurationInMonth=24,InterestRate=4},
+                new Offer{Name="qrrcqrew",Amount=20000,DurationInMonth=24,InterestRate=4},
+                new Offer{Name="xqreewq",Amount=50000,DurationInMonth=24,InterestRate=4},
+                new Offer{Name="qercerqs",Amount=100000,DurationInMonth=24,InterestRate=4},
+                new Offer{Name="qrewqs",Amount=150000,DurationInMonth=24,InterestRate=4},
+                new Offer{Name="rqxewqd",Amount=200000,DurationInMonth=24,InterestRate=4}
             };
             NewAgency.CreditOffers = NewCreditOffer;
         }
@@ -50,7 +123,7 @@ namespace Alpha_Bank.Testes
         public void RecruitSalesAgents()
         {
             var BankAgency = NewAgency;
-            var NewEmploye = new List<Employee>() { new Employee(new Person("Zakaria", "Essabbagh", "AE948157"), Role.CommercialAgent, 625) };
+            var NewEmploye = new List<Employee>() { new Employee { FirstName = "Zakaria", LastName = "Essabbagh", CIN = "AE948157", Role = Role.CommercialAgent, Solde = 625 } };
             var sut3 = NewEmploye.Count + NewAgency.Employees.Count;
             var chef = BankAgency.Employees.Find(emp => emp.Role == Role.Chef);
             var sut1 = BankAgency.RecruitSalesAgents(chef, NewEmploye);
@@ -78,7 +151,8 @@ namespace Alpha_Bank.Testes
             var BankAgency = NewAgency;
             var client = BankAgency.Clients.Find(cl => cl.CIN == "AX96325");
             var chef = BankAgency.Employees.Find(emp => emp.Role == Role.Chef);
-            var sut = BankAgency.CreditAllocation(chef, client, 100000, 22, 5000);
+            var offer = new Offer { Name = "10000123", Amount = 100000, DurationInMonth = 12, MonthlyInstallment = 5000 };
+            var sut = BankAgency.CreditAllocation(chef, client, offer);
             Assert.True(sut);
         }
         [Fact]
@@ -88,9 +162,10 @@ namespace Alpha_Bank.Testes
             var Admin = BankAgency.Employees.Find(emp => emp.Role == Role.AdministrativeResponsible);
             var amountOfPurchase = 5000;
             var caisse = BankAgency.Caisse;
-            var sut = BankAgency.PurchaseEquipment(Admin, amountOfPurchase);
-            Assert.True(sut);
-            Assert.Equal(caisse - amountOfPurchase, BankAgency.Caisse);
+            var sut1 = BankAgency.PurchaseEquipment(Admin, amountOfPurchase);
+            var sut2 = caisse - amountOfPurchase;
+            Assert.True(sut1);
+            Assert.Equal(sut2, BankAgency.Caisse);
         }
         [Fact]
         public void SalaryTransfer()
@@ -98,13 +173,14 @@ namespace Alpha_Bank.Testes
             var BankAgency = NewAgency;
             var Admin = BankAgency.Employees.Find(emp => emp.Role == Role.AdministrativeResponsible);
             var employe = BankAgency.Employees.Find(emp => emp.Role == Role.Chef);
-            var solde = employe.Solde;
             var salary = 20000;
-            var caisse = BankAgency.Caisse;
-            var sut = BankAgency.SalaryTransfer(Admin, employe, salary);
-            Assert.True(sut);
-            Assert.Equal(caisse - salary, BankAgency.Caisse);
-            Assert.Equal(solde + salary, BankAgency.Employees.Find(emp => emp.Role == Role.Chef).Solde);
+            var newSolde = employe.Solde + salary;
+            var newCaisse = BankAgency.Caisse - salary;
+            var sut1 = BankAgency.SalaryTransfer(Admin, employe, salary);
+            var sut2 = BankAgency.Employees.Find(emp => emp.Role == Role.Chef).Solde;
+            Assert.True(sut1);
+            Assert.Equal(newCaisse, BankAgency.Caisse);
+            Assert.Equal(newSolde, sut2);
         }
         [Fact]
         public void WithdrawalAmount()
@@ -112,19 +188,21 @@ namespace Alpha_Bank.Testes
             var BankAgency = NewAgency;
             var Admin = BankAgency.Employees.Find(emp => emp.Role == Role.AdministrativeResponsible);
             var client = BankAgency.Clients.Find(cl => cl.CIN == "AX02525");
-            var solde = client.Solde;
             var amount = 6000;
+            var solde = client.Solde - amount;
             var sut = BankAgency.WithdrawalAmount(Admin, client, amount);
             Assert.True(sut);
-            Assert.Equal(solde - amount, client.Solde);
+            Assert.Equal(solde, client.Solde);
         }
         [Fact]
         public void NewCreditOffer()
         {
             var BankAgency = NewAgency;
             var ProductResp = BankAgency.Employees.Find(emp => emp.Role == Role.ProductsResponsible);
-            var sut1 = BankAgency.NewCreditOffer(ProductResp, 500000, 60, 5);
-            var sut2 = BankAgency.NewCreditOffer(ProductResp, 100000, 12, 3);
+            var offer1 = new Offer { Name = "sdsdccds", Amount = 500000, DurationInMonth = 12, InterestRate = 5 };
+            var offer2 = new Offer { Name = "qeqrqwr", Amount = 100000, DurationInMonth = 12, InterestRate = 3 };
+            var sut1 = BankAgency.NewCreditOffer(ProductResp, offer1);
+            var sut2 = BankAgency.NewCreditOffer(ProductResp, offer2);
             Assert.True(sut1);
             Assert.False(sut2);
         }
@@ -133,14 +211,14 @@ namespace Alpha_Bank.Testes
         {
             var BankAgency = NewAgency;
             var ProductResp = BankAgency.Employees.Find(emp => emp.Role == Role.ProductsResponsible);
-            var newClient = new Person("Taha", "Chakir", "AW845123");
-            var solde = 1000;
-            var sut1 = BankAgency.CreateAccount(ProductResp, newClient, solde);
+            var newClient = new Client { FirstName = "Taha", LastName = "Chakir", CIN = "AW845123", Solde = 1000 };
+            var solde = newClient.Solde - 30;
+            var sut1 = BankAgency.CreateClientAccount(ProductResp, newClient);
             var sut2 = BankAgency.Clients.Exists(cli => cli.CIN == "AW845123");
             var sut3 = BankAgency.Clients.Find(cli => cli.CIN == "AW845123").Solde;
             Assert.True(sut1);
             Assert.True(sut2);
-            Assert.Equal(solde - 30, sut3);
+            Assert.Equal(solde, sut3);
         }
         [Fact]
         public void Transfers()
@@ -150,9 +228,11 @@ namespace Alpha_Bank.Testes
             var client = BankAgency.Clients.Find(cl => cl.CIN == "AX96944");
             var amount = 6580;
             var solde = client.Solde;
-            var sut = BankAgency.Transfers(Commercial, client, amount);
-            Assert.True(sut);
-            Assert.Equal(solde + amount, BankAgency.Clients.Find(cl => cl.CIN == "AX96944").Solde);
+            var sut1 = BankAgency.Transfers(Commercial, client, amount);
+            var sut2 = solde + amount;
+            var sut3 = BankAgency.Clients.Find(cl => cl.CIN == "AX96944").Solde;
+            Assert.True(sut1);
+            Assert.Equal(sut2, sut3);
 
         }
         [Fact]
@@ -164,14 +244,14 @@ namespace Alpha_Bank.Testes
             var client2 = BankAgency.Clients.Find(cl => cl.CIN == "AX96944");
             var client3 = BankAgency.Clients.Find(cl => cl.CIN == "AX97725");
             var amount = 7000;
-            var solde1 = client1.Solde;
-            var solde2 = client2.Solde;
+            var solde1 = client1.Solde-amount-6;
+            var solde2 = client2.Solde - 30;
             var sut1 = BankAgency.Transaction(Commercial, client1, client2, amount, TransactionType.National);
-            var sut2 = BankAgency.Transaction(Commercial, client2, client3, amount, TransactionType.International);            
+            var sut2 = BankAgency.Transaction(Commercial, client2, client3, amount, TransactionType.International);
             Assert.True(sut1);
             Assert.True(sut2);
-            Assert.Equal(solde1 - (amount + 6), client1.Solde);
-            Assert.Equal(solde2 -30, client2.Solde);
+            Assert.Equal(solde1, client1.Solde);
+            Assert.Equal(solde2, client2.Solde);
         }
     }
 }
