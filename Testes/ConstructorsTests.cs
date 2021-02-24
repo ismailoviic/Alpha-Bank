@@ -13,13 +13,10 @@ namespace Alpha_Bank
             var firstName = "Ismail";
             var lastName = "Essabbagh";
             var cin = "AE202368";
-            var sut1 = new Person(firstName, lastName, cin);
-            var sut2 = new Person(firstName, cin, lastName);
+            var sut1 = new Person { FirstName = firstName, LastName = lastName, CIN = cin };
             Assert.Equal(firstName, sut1.FirstName);
             Assert.Equal(lastName, sut1.LastName);
             Assert.Equal(cin, sut1.CIN);
-            Assert.NotEqual(firstName, sut2.FirstName);
-            Assert.True(string.IsNullOrEmpty(sut2.LastName));
 
         }
         [Fact]
@@ -29,16 +26,12 @@ namespace Alpha_Bank
             var lastName = "Essabbagh";
             var cin = "AE202368";
             var solde = 500;
-            var sut1 = new Person(firstName, lastName, cin);
-            var sut2 = new Client(firstName, lastName, cin, solde);
-            var sut3 = new Client(sut1, solde);
+            var sut = new Client { FirstName = firstName, LastName = lastName, CIN = cin, Solde = solde };
 
-            Assert.Equal(firstName, sut2.FirstName);
-            Assert.Equal(lastName, sut2.LastName);
-            Assert.Equal(cin, sut2.CIN);
-            Assert.Equal(solde, sut2.Solde);
-
-            Assert.True(sut2.ComparePersonTo(sut3));
+            Assert.Equal(firstName, sut.FirstName);
+            Assert.Equal(lastName, sut.LastName);
+            Assert.Equal(cin, sut.CIN);
+            Assert.Equal(solde, sut.Solde);
         }
 
         [Fact]
@@ -48,10 +41,11 @@ namespace Alpha_Bank
             var DurationInMonth = 12;
             var InterestRate = 5;
             var MonthlyInstallment = 8.75m;
-            var sut1 = new Credit(Amount, DurationInMonth, InterestRate);
-            var sut2 = new Credit(Amount, 0, InterestRate);
-            Assert.Equal(MonthlyInstallment, sut1.MonthlyInstallment);
-            Assert.Equal(-1, sut2.Amount);
+            var sut = new Credit { Amount = Amount, DurationInMonth = DurationInMonth, MonthlyInstallment = MonthlyInstallment, InterestRate = InterestRate };
+            Assert.Equal(Amount, sut.Amount);
+            Assert.Equal(DurationInMonth, sut.DurationInMonth);
+            Assert.Equal(InterestRate, sut.InterestRate);
+            Assert.Equal(MonthlyInstallment, sut.MonthlyInstallment);
         }
         [Fact]
         public void EmployeeTest()
@@ -62,14 +56,13 @@ namespace Alpha_Bank
             var cin = "AE202368";
             var solde = 500;
             var role = Role.Chef;
-            var sut1 = new Person(firstName, lastName, cin);
-            var sut2 = new Employee(sut1, role, solde);
+            var sut = new Employee { FirstName = firstName, LastName = lastName, CIN = cin, Role = role, Solde = solde };
 
-            Assert.Equal(firstName, sut2.FirstName);
-            Assert.Equal(lastName, sut2.LastName);
-            Assert.Equal(cin, sut2.CIN);
-            Assert.Equal(solde, sut2.Solde);
-            Assert.True(sut2.ComparePersonTo(sut1));
+            Assert.Equal(firstName, sut.FirstName);
+            Assert.Equal(lastName, sut.LastName);
+            Assert.Equal(cin, sut.CIN);
+            Assert.Equal(solde, sut.Solde);
+            Assert.Equal(role, sut.Role);
         }
         [Fact]
         public void FunctionTestConstructorTest()
