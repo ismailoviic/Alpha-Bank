@@ -1,9 +1,7 @@
-using Alpha_Bank.Implementation;
-using Alpha_Bank.Testes;
 using System;
 using Xunit;
 
-namespace Alpha_Bank
+namespace AlphaBankImplementation
 {
     public class ConstructorsTests
     {

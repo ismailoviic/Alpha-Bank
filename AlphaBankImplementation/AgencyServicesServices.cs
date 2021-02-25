@@ -1,33 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace Alpha_Bank.Implementation
+namespace AlphaBankImplementation
 {
-    public class Agency : IAgency
+    public class AgencyServicesServices : Agency, IAgencyServices
     {
-        public List<Employee> Employees { get; set; }
-
-        public List<Client> Clients { get; set; }
-        public List<Offer> CreditOffers { get; set; }
-        public decimal Caisse { get; set; }
-
-        public Agency(List<Employee> employees, decimal caisse)
+        public bool RecruitSalesAgents(Employee person,List<Employee> newSaler)
         {
-            Employees = employees;
-            Caisse = caisse;
-        }
-
-        public bool RecruitSalesAgents(Employee person, List<Employee> Salers)
-        {
-            if (person.Role == Role.Chef) { Employees.AddRange(Salers); return true; }
+            if (person.Role == Role.Chef) { Employees.AddRange(newSaler); return true; }
             return false;
         }
 
-        public bool RespondToComplaints(Employee employee, Client client, string Respond)
+        public bool RespondToComplaints(Employee employee, Client client, string respond)
         {
-            if (employee.Role == Role.Chef) { client.Reclamation = Respond; return true; }
+            if (employee.Role == Role.Chef) { client.Reclamation = respond; return true; }
             return false;
         }
 

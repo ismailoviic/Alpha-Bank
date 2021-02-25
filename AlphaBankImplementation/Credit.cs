@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Alpha_Bank.Implementation
+namespace AlphaBankImplementation
 {
     public class Credit
     {
@@ -10,7 +10,5 @@ namespace Alpha_Bank.Implementation
         public int DurationInMonth { get; set; }
         public decimal InterestRate { get; set; }
         public decimal MonthlyInstallment { get; set; }
-
-        public Credit() { }
     }
 }

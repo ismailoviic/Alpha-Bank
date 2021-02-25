@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Alpha_Bank.Implementation
+namespace AlphaBankImplementation
 {
     public class Person
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string CIN { get; set; }
-
-        public Person() { }
 
         public bool ComparePersonTo(Person person)
         {
